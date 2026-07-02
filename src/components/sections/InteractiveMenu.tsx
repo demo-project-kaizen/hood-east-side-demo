@@ -9,6 +9,11 @@ import yamiePanda from '../../assets/images/yamie_panda.png';
 import universalPeopleDrinks2 from '../../assets/images/universal_peopledrinks2.png';
 import yamiePanda2 from '../../assets/images/yamie_panda2.png';
 
+// New high-quality food photos uploaded by user
+import yamiePandaMie from '../../assets/images/yamie_panda_mie.png';
+import yamiePandaFood2 from '../../assets/images/yamie_panda_food2.png';
+import yamieFood from '../../assets/images/yamie_food.png';
+
 interface InteractiveMenuProps {
   lang: 'ID' | 'EN';
 }
@@ -93,7 +98,7 @@ export default function InteractiveMenu({ lang }: InteractiveMenuProps) {
       description: lang === 'ID'
         ? 'Mi yamie tipis kenyal otentik khas Yamie Panda, disajikan dengan suwiran ayam gurih, pangsit basah lembut, bakso sapi goreng renyah, kuah kaldu hangat terpisah, dan sawi hijau segar.'
         : 'Authentic springy hand-pulled Chinese-style noodles tossed in signature savory oils. Crowned with tender shredded seasoned chicken, soft wontons, crispy fried beef meatballs, and hot savory broth.',
-      image: yamiePanda, 
+      image: yamiePandaMie, 
       tags: ['Savory', 'WarmComfort', 'NoodleMaster'],
       isSignature: true,
       ingredients: ['Handmade Thin Egg Noodles', 'Seasoned Shredded Chicken', 'Steamed Chicken Wonton', 'Fried Beef Ball', 'Chives & Savory Broth'],
@@ -122,10 +127,25 @@ export default function InteractiveMenu({ lang }: InteractiveMenuProps) {
       description: lang === 'ID'
         ? 'Sajian mi ayam dengan bumbu kecap manis gurih otentik khas Yamie Panda, disajikan dengan topping pangsit goreng renyah dan bakso sapi kenyal hangat.'
         : 'Delicious springy noodles tossed in sweet savory soy-based sauce. Topped with seasoned shredded chicken, crunchy fried wonton skins, and savory beef meatballs.',
-      image: yamiePanda2,
+      image: yamiePandaFood2,
       tags: ['SweetSavory', 'Noodles', 'Favorite'],
       ingredients: ['Premium Springy Noodles', 'Yamie Panda Sweet Soy Blend', 'Seasoned Minced Chicken', 'Crispy Fried Wonton Skins', 'Beef Meatballs'],
       calories: '440 kcal'
+    },
+    {
+      id: 'y3',
+      name: 'Yamie Panda Family Feast Set',
+      category: 'comfort-food',
+      brand: 'yamie-panda',
+      price: 54000,
+      description: lang === 'ID'
+        ? 'Paket hidangan pesta rasa Yamie Panda yang super lengkap dan memuaskan. Menyajikan porsi mi besar, aneka pangsit kukus, bakso goreng renyah, kuah kaldu melimpah, dan sambal cabai gurih.'
+        : 'The ultimate sharing feast by Yamie Panda. Premium hand-pulled noodles paired with a select array of steamed wontons, crispy fried meatballs, double-rich warm broth, and house chili oil.',
+      image: yamieFood,
+      tags: ['FeastSet', 'Sharing', 'NewArrival'],
+      isSignature: true,
+      ingredients: ['Large Special Thin Noodles', 'Double Steamed Wontons', 'Crispy Fried Dim Sum Set', 'Rich Hot Broth Bowl', 'Signature Chili Oil'],
+      calories: '690 kcal'
     },
     {
       id: 'h4',

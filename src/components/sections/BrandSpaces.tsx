@@ -1,5 +1,5 @@
-import React from 'react';
-import { Coffee, Utensils, Clock, Sparkles, ChevronRight, Image as ImageIcon } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { Coffee, Utensils, Clock, Sparkles, ChevronRight, ChevronLeft, X, Image as ImageIcon } from 'lucide-react';
 
 // Import image assets for production bundling compatibility (Vercel, etc.)
 import universalCoffee from '../../assets/images/universal_coffee.png';
@@ -11,11 +11,51 @@ import yamiePanda2 from '../../assets/images/yamie_panda2.png';
 import universalLandscape from '../../assets/images/universal_landscap.png';
 import hoodOutdoor from '../../assets/images/hood_outdoor.png';
 
+// New high-quality Yamie Panda images provided by user
+import yamieFood from '../../assets/images/yamie_food.png';
+import yamiePandaFood2 from '../../assets/images/yamie_panda_food2.png';
+import yamiePandaMie from '../../assets/images/yamie_panda_mie.png';
+import yamiePandaShop from '../../assets/images/yamie_panda_shop.png';
+import yamiePandaBanner from '../../assets/images/yamie_panda_banner.png';
+
 interface BrandSpacesProps {
   lang: 'ID' | 'EN';
 }
 
 export default function BrandSpaces({ lang }: BrandSpacesProps) {
+  const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
+
+  const galleryItems = [
+    // Index 0-3: Universal People
+    { src: universalCoffee, alt: 'Slow-Drip Coffee Bar', captionID: 'Bar Kopi Slow-Drip - Universal People', captionEN: 'Slow-Drip Coffee Bar - Universal People' },
+    { src: universalSneak, alt: 'Kyoto Ceremonial Matcha', captionID: 'Kyoto Ceremonial Matcha - Universal People', captionEN: 'Kyoto Ceremonial Matcha - Universal People' },
+    { src: universalGallery, alt: 'Aesthetic Design Corner', captionID: 'Sudut Galeri Estetik - Universal People', captionEN: 'Aesthetic Gallery Corner - Universal People' },
+    { src: universalNight, alt: 'Cozy Dusk Atmosphere', captionID: 'Suasana Senja Syahdu - Universal People', captionEN: 'Cozy Dusk Atmosphere - Universal People' },
+    
+    // Index 4-9: Yamie Panda (Expanded with new real photos)
+    { src: yamiePandaMie, alt: 'Yamie Panda Special Noodles', captionID: 'Yamie Panda Mie Spesial Kuah Kaldu - Yamie Panda Cipinang', captionEN: 'Yamie Panda Special Hand-Pulled Noodles' },
+    { src: yamiePandaFood2, alt: 'Steamed Wontons & Fried Meatballs', captionID: 'Pangsit Basah Lembut & Bakso Sapi Goreng - Yamie Panda Cipinang', captionEN: 'Savory Steamed Wontons & Crispy Fried Meatballs' },
+    { src: yamieFood, alt: 'The Complete Yamie Feast Platter', captionID: 'Pesta Hidangan Lengkap & Menu Pendamping - Yamie Panda', captionEN: 'The Complete Delicious Selection & Sides - Yamie Panda' },
+    { src: yamiePandaShop, alt: 'Modern Noodle Station Cipinang', captionID: 'Dapur Noodle Station & Ruang Dine-In - Yamie Panda Cipinang', captionEN: 'Dapur Noodle Station & Dine-In Area - Yamie Panda Cipinang' },
+    { src: yamiePanda, alt: 'Savory Special Chicken Noodles', captionID: 'Yamie Special Chicken Asin Gurih - Yamie Panda', captionEN: 'Savory Yamie Special Chicken - Yamie Panda' },
+    { src: yamiePanda2, alt: 'Classic Sweet Savory Noodles', captionID: 'Yamie Manis-Gurih Klasik Legendaris - Yamie Panda', captionEN: 'Classic Sweet-Savory Yamie Noodles - Yamie Panda' }
+  ];
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (lightboxIndex === null) return;
+      if (e.key === 'Escape') {
+        setLightboxIndex(null);
+      } else if (e.key === 'ArrowLeft') {
+        setLightboxIndex((prev) => (prev !== null ? (prev === 0 ? galleryItems.length - 1 : prev - 1) : null));
+      } else if (e.key === 'ArrowRight') {
+        setLightboxIndex((prev) => (prev !== null ? (prev === galleryItems.length - 1 ? 0 : prev + 1) : null));
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [lightboxIndex]);
+
   return (
     <section 
       id="brands" 
@@ -110,54 +150,35 @@ export default function BrandSpaces({ lang }: BrandSpacesProps) {
 
             {/* Gallery Mockup inside cards (Real photo assets created by user) */}
             <div>
-              <span className="text-[9px] font-mono text-zinc-400 uppercase tracking-widest font-bold block mb-3">
-                {lang === 'ID' ? 'GALERI UNIVERSAL PEOPLE' : 'UNIVERSAL PEOPLE GALLERY'}
-              </span>
+              <div className="flex justify-between items-center mb-3">
+                <span className="text-[9px] font-mono text-zinc-400 uppercase tracking-widest font-bold">
+                  {lang === 'ID' ? 'GALERI UNIVERSAL PEOPLE' : 'UNIVERSAL PEOPLE GALLERY'}
+                </span>
+                <span className="text-[9px] font-sans text-ambient-orange font-semibold animate-pulse">
+                  {lang === 'ID' ? '• Ketuk untuk memperbesar' : '• Tap to enlarge'}
+                </span>
+              </div>
               <div className="grid grid-cols-4 gap-2">
-                <div className="aspect-square rounded-xl overflow-hidden bg-zinc-100 border border-zinc-200 relative group/img">
-                  <img 
-                    src={universalCoffee} 
-                    alt="Universal Coffee" 
-                    className="w-full h-full object-cover group-hover/img:scale-110 transition-transform duration-300"
-                    referrerPolicy="no-referrer"
-                  />
-                  <div className="absolute inset-0 bg-black/10 flex items-center justify-center opacity-0 group-hover/img:opacity-100 transition-opacity">
-                    <ImageIcon className="w-4 h-4 text-white" />
-                  </div>
-                </div>
-                <div className="aspect-square rounded-xl overflow-hidden bg-zinc-100 border border-zinc-200 relative group/img">
-                  <img 
-                    src={universalSneak} 
-                    alt="Universal Sneak" 
-                    className="w-full h-full object-cover group-hover/img:scale-110 transition-transform duration-300"
-                    referrerPolicy="no-referrer"
-                  />
-                  <div className="absolute inset-0 bg-black/10 flex items-center justify-center opacity-0 group-hover/img:opacity-100 transition-opacity">
-                    <ImageIcon className="w-4 h-4 text-white" />
-                  </div>
-                </div>
-                <div className="aspect-square rounded-xl overflow-hidden bg-zinc-100 border border-zinc-200 relative group/img">
-                  <img 
-                    src={universalGallery} 
-                    alt="Universal Gallery" 
-                    className="w-full h-full object-cover group-hover/img:scale-110 transition-transform duration-300"
-                    referrerPolicy="no-referrer"
-                  />
-                  <div className="absolute inset-0 bg-black/10 flex items-center justify-center opacity-0 group-hover/img:opacity-100 transition-opacity">
-                    <ImageIcon className="w-4 h-4 text-white" />
-                  </div>
-                </div>
-                <div className="aspect-square rounded-xl overflow-hidden bg-zinc-100 border border-zinc-200 relative group/img">
-                  <img 
-                    src={universalNight} 
-                    alt="Universal Night" 
-                    className="w-full h-full object-cover group-hover/img:scale-110 transition-transform duration-300"
-                    referrerPolicy="no-referrer"
-                  />
-                  <div className="absolute inset-0 bg-black/10 flex items-center justify-center opacity-0 group-hover/img:opacity-100 transition-opacity">
-                    <ImageIcon className="w-4 h-4 text-white" />
-                  </div>
-                </div>
+                {[0, 1, 2, 3].map((idx) => (
+                  <button 
+                    key={idx}
+                    onClick={() => setLightboxIndex(idx)}
+                    className="aspect-square rounded-xl overflow-hidden bg-zinc-100 border border-zinc-200 relative group/img cursor-pointer active:scale-95 transition-all outline-hidden focus:ring-2 focus:ring-[#0D47A1]"
+                    title={lang === 'ID' ? 'Klik untuk memperbesar' : 'Click to enlarge'}
+                  >
+                    <img 
+                      src={galleryItems[idx].src} 
+                      alt={galleryItems[idx].alt} 
+                      className="w-full h-full object-cover group-hover/img:scale-110 transition-transform duration-500"
+                      referrerPolicy="no-referrer"
+                    />
+                    <div className="absolute inset-0 bg-black/35 flex items-center justify-center opacity-0 group-hover/img:opacity-100 transition-opacity duration-300">
+                      <div className="p-1.5 bg-white/20 rounded-lg backdrop-blur-xs">
+                        <ImageIcon className="w-4 h-4 text-white" />
+                      </div>
+                    </div>
+                  </button>
+                ))}
               </div>
             </div>
 
@@ -223,55 +244,35 @@ export default function BrandSpaces({ lang }: BrandSpacesProps) {
 
             {/* Gallery Mockup inside cards */}
             <div>
-              <span className="text-[9px] font-mono text-zinc-400 uppercase tracking-widest font-bold block mb-3">
-                {lang === 'ID' ? 'GALERI YAMIE PANDA' : 'YAMIE PANDA GALLERY'}
-              </span>
-              <div className="grid grid-cols-4 gap-2">
-                <div className="aspect-square rounded-xl overflow-hidden bg-zinc-100 border border-zinc-200 relative group/img">
-                  <img 
-                    src={yamiePanda} 
-                    alt="Yamie Panda Special" 
-                    className="w-full h-full object-cover group-hover/img:scale-110 transition-transform duration-300"
-                    referrerPolicy="no-referrer"
-                  />
-                  <div className="absolute inset-0 bg-black/10 flex items-center justify-center opacity-0 group-hover/img:opacity-100 transition-opacity">
-                    <ImageIcon className="w-4 h-4 text-white" />
-                  </div>
-                </div>
-                <div className="aspect-square rounded-xl overflow-hidden bg-zinc-100 border border-zinc-200 relative group/img">
-                  <img 
-                    src={yamiePanda2} 
-                    alt="Yamie Panda 2" 
-                    className="w-full h-full object-cover group-hover/img:scale-110 transition-transform duration-300"
-                    referrerPolicy="no-referrer"
-                  />
-                  <div className="absolute inset-0 bg-black/10 flex items-center justify-center opacity-0 group-hover/img:opacity-100 transition-opacity">
-                    <ImageIcon className="w-4 h-4 text-white" />
-                  </div>
-                </div>
-                {/* Fallbacks with beautiful placeholders or landscape */}
-                <div className="aspect-square rounded-xl overflow-hidden bg-zinc-100 border border-zinc-200 relative group/img">
-                  <img 
-                    src={universalLandscape} 
-                    alt="Yard Outdoor" 
-                    className="w-full h-full object-cover group-hover/img:scale-110 transition-transform duration-300"
-                    referrerPolicy="no-referrer"
-                  />
-                  <div className="absolute inset-0 bg-black/10 flex items-center justify-center opacity-0 group-hover/img:opacity-100 transition-opacity">
-                    <ImageIcon className="w-4 h-4 text-white" />
-                  </div>
-                </div>
-                <div className="aspect-square rounded-xl overflow-hidden bg-zinc-100 border border-zinc-200 relative group/img">
-                  <img 
-                    src={hoodOutdoor} 
-                    alt="Yard Table" 
-                    className="w-full h-full object-cover group-hover/img:scale-110 transition-transform duration-300"
-                    referrerPolicy="no-referrer"
-                  />
-                  <div className="absolute inset-0 bg-black/10 flex items-center justify-center opacity-0 group-hover/img:opacity-100 transition-opacity">
-                    <ImageIcon className="w-4 h-4 text-white" />
-                  </div>
-                </div>
+              <div className="flex justify-between items-center mb-3">
+                <span className="text-[9px] font-mono text-zinc-400 uppercase tracking-widest font-bold">
+                  {lang === 'ID' ? 'GALERI YAMIE PANDA' : 'YAMIE PANDA GALLERY'}
+                </span>
+                <span className="text-[9px] font-sans text-ambient-orange font-semibold animate-pulse">
+                  {lang === 'ID' ? '• Ketuk untuk memperbesar' : '• Tap to enlarge'}
+                </span>
+              </div>
+              <div className="grid grid-cols-3 md:grid-cols-6 gap-2">
+                {[4, 5, 6, 7, 8, 9].map((idx) => (
+                  <button 
+                    key={idx}
+                    onClick={() => setLightboxIndex(idx)}
+                    className="aspect-square rounded-xl overflow-hidden bg-zinc-100 border border-zinc-200 relative group/img cursor-pointer active:scale-95 transition-all outline-hidden focus:ring-2 focus:ring-red-700"
+                    title={lang === 'ID' ? 'Klik untuk memperbesar' : 'Click to enlarge'}
+                  >
+                    <img 
+                      src={galleryItems[idx].src} 
+                      alt={galleryItems[idx].alt} 
+                      className="w-full h-full object-cover group-hover/img:scale-110 transition-transform duration-500"
+                      referrerPolicy="no-referrer"
+                    />
+                    <div className="absolute inset-0 bg-black/35 flex items-center justify-center opacity-0 group-hover/img:opacity-100 transition-opacity duration-300">
+                      <div className="p-1 bg-white/20 rounded-md backdrop-blur-xs">
+                        <ImageIcon className="w-3.5 h-3.5 text-white" />
+                      </div>
+                    </div>
+                  </button>
+                ))}
               </div>
             </div>
 
@@ -280,6 +281,71 @@ export default function BrandSpaces({ lang }: BrandSpacesProps) {
         </div>
 
       </div>
+
+      {/* Modern Accessible Lightbox Modal with Smooth Overlay and Sliding Controls */}
+      {lightboxIndex !== null && (
+        <div 
+          className="fixed inset-0 z-[100] bg-zinc-950/95 flex flex-col items-center justify-center p-4 backdrop-blur-md transition-opacity duration-300"
+          onClick={() => setLightboxIndex(null)}
+        >
+          {/* Close button */}
+          <button 
+            onClick={() => setLightboxIndex(null)}
+            className="absolute top-4 right-4 z-50 bg-white/10 hover:bg-white/25 hover:scale-105 active:scale-95 text-white rounded-full p-3 transition-all cursor-pointer shadow-lg"
+            aria-label="Close Lightbox"
+          >
+            <X className="w-6 h-6" />
+          </button>
+
+          {/* Navigation controls */}
+          <button 
+            onClick={(e) => {
+              e.stopPropagation();
+              setLightboxIndex((prev) => (prev !== null ? (prev === 0 ? galleryItems.length - 1 : prev - 1) : null));
+            }}
+            className="absolute left-4 md:left-8 bg-white/10 hover:bg-white/25 hover:scale-105 active:scale-95 text-white rounded-full p-3 transition-all cursor-pointer z-40 shadow-lg"
+            aria-label="Previous Image"
+          >
+            <ChevronLeft className="w-6 h-6" />
+          </button>
+
+          <button 
+            onClick={(e) => {
+              e.stopPropagation();
+              setLightboxIndex((prev) => (prev !== null ? (prev === galleryItems.length - 1 ? 0 : prev + 1) : null));
+            }}
+            className="absolute right-4 md:right-8 bg-white/10 hover:bg-white/25 hover:scale-105 active:scale-95 text-white rounded-full p-3 transition-all cursor-pointer z-40 shadow-lg"
+            aria-label="Next Image"
+          >
+            <ChevronRight className="w-6 h-6" />
+          </button>
+
+          {/* Image Container with scale transition */}
+          <div 
+            className="relative max-w-4xl max-h-[80vh] flex flex-col items-center justify-center animate-in fade-in zoom-in-95 duration-200" 
+            onClick={(e) => e.stopPropagation()}
+          >
+            <img 
+              src={galleryItems[lightboxIndex].src} 
+              alt={galleryItems[lightboxIndex].alt} 
+              className="max-w-full max-h-[65vh] md:max-h-[72vh] object-contain rounded-2xl border border-zinc-800 shadow-2xl"
+              referrerPolicy="no-referrer"
+            />
+            
+            {/* Caption Overlay */}
+            <div className="mt-5 text-center px-4 max-w-xl">
+              <p className="text-sm md:text-base font-sans font-medium text-white tracking-wide">
+                {lang === 'ID' ? galleryItems[lightboxIndex].captionID : galleryItems[lightboxIndex].captionEN}
+              </p>
+              <div className="mt-2 flex items-center justify-center space-x-2 text-[10px] font-mono text-zinc-400 uppercase tracking-widest">
+                <span>{lightboxIndex + 1} / {galleryItems.length}</span>
+                <span>•</span>
+                <span>{lang === 'ID' ? 'Gunakan tombol panah / swipe' : 'Use arrow keys / swipe'}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </section>
   );
 }

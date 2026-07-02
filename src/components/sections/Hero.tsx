@@ -53,7 +53,7 @@ export default function Hero({ lang, ambientVibe, setAmbientVibe }: HeroProps) {
   return (
     <section 
       id="hero"
-      className="relative min-h-[95vh] flex items-center justify-center overflow-hidden pt-24 pb-16 bg-[#FAF9F5] text-zinc-900 raw-grain"
+      className="relative min-h-[95vh] flex items-center justify-center overflow-hidden pt-36 sm:pt-40 lg:pt-48 pb-16 bg-[#FAF9F5] text-zinc-900 raw-grain"
     >
       {/* Background image overlay with dynamic cross-fade */}
       <div className="absolute inset-0 z-0">
