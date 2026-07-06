@@ -78,20 +78,20 @@ export default function Navbar({ lang, setLang }: NavbarProps) {
         <div className={`max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between transition-all duration-500 ${
           scrolled || isOpen ? 'py-2 sm:py-2.5' : 'py-3 sm:py-4'
         }`}>
-          {/* Brand Logo - Replicated styled typography as seen in reference */}
-          <a href="#hero" className="flex items-center space-x-3 group" id="nav-brand">
-            <div className="relative bg-zinc-950 border border-zinc-900 px-3 py-1.5 sm:px-4 sm:py-2 rounded-xl sm:rounded-2xl flex flex-col items-center justify-center transition-all duration-300 shadow-md">
-              <span className="font-display font-bold text-base sm:text-lg tracking-widest text-white leading-none">
+          {/* Brand Logo - Elegantly minimal luxury typography */}
+          <a href="#hero" className="flex items-center space-x-2" id="nav-brand">
+            <div className="flex flex-col leading-none">
+              <span className="font-display font-black text-lg tracking-[0.2em] text-zinc-950 uppercase select-none">
                 hood
               </span>
-              <div className="flex justify-between w-full text-[5px] sm:text-[6px] tracking-widest text-zinc-400 font-mono mt-0.5 uppercase">
-                <span>east</span>
-                <span>side</span>
-              </div>
+              <span className="text-[7px] tracking-[0.3em] text-zinc-400 font-mono mt-0.5 uppercase font-bold select-none">
+                east side
+              </span>
             </div>
-            <div className="hidden md:flex flex-col">
-              <span className="text-[10px] font-mono tracking-widest text-zinc-600 uppercase leading-tight font-bold">cipinang, jakarta</span>
-              <span className="text-[9px] font-sans text-ambient-orange font-semibold tracking-wide">slow bar & social space</span>
+            <div className="h-6 w-[1px] bg-zinc-200 mx-1.5 hidden sm:block" id="logo-divider" />
+            <div className="hidden sm:flex flex-col">
+              <span className="text-[9px] font-mono tracking-widest text-zinc-500 uppercase leading-none font-bold">cipinang, jakarta</span>
+              <span className="text-[9px] font-sans text-zinc-400 font-semibold tracking-wide mt-0.5">{lang === 'ID' ? 'ruang sosial & kopi' : 'slow bar & social'}</span>
             </div>
           </a>
 

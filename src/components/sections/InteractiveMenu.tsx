@@ -22,7 +22,6 @@ export default function InteractiveMenu({ lang }: InteractiveMenuProps) {
   const [activeCategory, setActiveCategory] = useState<'all' | 'coffee' | 'tea-elixirs' | 'comfort-food'>('all');
   const [activeBrand, setActiveBrand] = useState<'all' | 'universal-people' | 'yamie-panda'>('all');
   const [searchQuery, setSearchQuery] = useState('');
-  const [maxPrice, setMaxPrice] = useState<number>(60000);
   const [selectedItem, setSelectedItem] = useState<MenuItem | null>(null);
   const [likedItems, setLikedItems] = useState<Record<string, boolean>>({});
 
@@ -171,10 +170,9 @@ export default function InteractiveMenu({ lang }: InteractiveMenuProps) {
       const matchSearch = item.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
                           item.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
                           item.tags.some(tag => tag.toLowerCase().includes(searchQuery.toLowerCase()));
-      const matchPrice = item.price <= maxPrice;
-      return matchCategory && matchBrand && matchSearch && matchPrice;
+      return matchCategory && matchBrand && matchSearch;
     });
-  }, [activeCategory, activeBrand, searchQuery, maxPrice, lang]);
+  }, [activeCategory, activeBrand, searchQuery, lang]);
 
   const toggleLike = (id: string, e: React.MouseEvent) => {
     e.stopPropagation();
@@ -209,48 +207,33 @@ export default function InteractiveMenu({ lang }: InteractiveMenuProps) {
 
         {/* Dynamic Filter Controls Panel */}
         <div className="bg-white border border-zinc-200 rounded-2xl p-6 mb-12 shadow-sm">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 items-center">
             
             {/* Search Input */}
-            <div className="lg:col-span-4 relative">
-              <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-zinc-400">
-                <Search className="w-4 h-4" />
-              </span>
-              <input
-                type="text"
-                placeholder={lang === 'ID' ? 'Cari menu (e.g. matcha, latte...)' : 'Search menu...'}
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full bg-zinc-50 border border-zinc-200 rounded-xl pl-10 pr-4 py-2.5 text-xs font-mono focus:outline-none focus:border-zinc-400 text-zinc-900 transition-colors placeholder:text-zinc-400"
-                id="menu-search-input"
-              />
-            </div>
-
-            {/* Price Filter Slider */}
-            <div className="lg:col-span-4 flex flex-col space-y-1.5">
-              <div className="flex justify-between items-center text-[10px] font-mono text-zinc-500 font-bold">
-                <span>{lang === 'ID' ? 'BATAS HARGA MAKSIMUM' : 'MAX PRICE THRESHOLD'}</span>
-                <span className="text-zinc-900 font-bold">{formatPrice(maxPrice)}</span>
+            <div className="relative">
+              <span className="text-[10px] font-mono text-zinc-500 uppercase tracking-widest font-bold block mb-1.5">{lang === 'ID' ? 'CARI HIDANGAN' : 'SEARCH OFFERINGS'}</span>
+              <div className="relative">
+                <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-zinc-400">
+                  <Search className="w-4 h-4" />
+                </span>
+                <input
+                  type="text"
+                  placeholder={lang === 'ID' ? 'Cari menu (e.g. matcha, latte...)' : 'Search menu...'}
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="w-full bg-zinc-50 border border-zinc-200 rounded-xl pl-10 pr-4 py-2.5 text-xs font-mono focus:outline-none focus:border-zinc-400 text-zinc-900 transition-colors placeholder:text-zinc-400"
+                  id="menu-search-input"
+                />
               </div>
-              <input
-                type="range"
-                min="20000"
-                max="60000"
-                step="2000"
-                value={maxPrice}
-                onChange={(e) => setMaxPrice(Number(e.target.value))}
-                className="w-full accent-zinc-950 h-1 bg-zinc-100 rounded"
-                id="menu-price-slider"
-              />
             </div>
 
             {/* Brand filter icons */}
-            <div className="lg:col-span-4 flex flex-col space-y-1.5">
+            <div className="flex flex-col space-y-1.5">
               <span className="text-[10px] font-mono text-zinc-500 uppercase tracking-widest font-bold">{lang === 'ID' ? 'FILTER BERDASARKAN USAHA' : 'FILTER BY OUTLET'}</span>
               <div className="flex gap-2">
                 <button
                   onClick={() => setActiveBrand('all')}
-                  className={`flex-1 py-1.5 px-2 rounded-full border text-[10px] font-mono transition-all uppercase ${
+                  className={`flex-1 py-2 px-2 rounded-full border text-[10px] font-mono transition-all uppercase ${
                     activeBrand === 'all' 
                       ? 'bg-zinc-950 border-zinc-950 text-white font-bold' 
                       : 'bg-zinc-100 border-zinc-200 text-zinc-500 hover:text-zinc-900'
@@ -260,7 +243,7 @@ export default function InteractiveMenu({ lang }: InteractiveMenuProps) {
                 </button>
                 <button
                   onClick={() => setActiveBrand('universal-people')}
-                  className={`flex-1 py-1.5 px-3 rounded-full border text-[10px] font-mono transition-all uppercase ${
+                  className={`flex-1 py-2 px-3 rounded-full border text-[10px] font-mono transition-all uppercase ${
                     activeBrand === 'universal-people' 
                       ? 'bg-blue-100 border-blue-300 text-[#0D47A1] font-bold' 
                       : 'bg-zinc-100 border-zinc-200 text-zinc-500 hover:text-blue-850'
@@ -270,7 +253,7 @@ export default function InteractiveMenu({ lang }: InteractiveMenuProps) {
                 </button>
                 <button
                   onClick={() => setActiveBrand('yamie-panda')}
-                  className={`flex-1 py-1.5 px-3 rounded-full border text-[10px] font-mono transition-all uppercase ${
+                  className={`flex-1 py-2 px-3 rounded-full border text-[10px] font-mono transition-all uppercase ${
                     activeBrand === 'yamie-panda' 
                       ? 'bg-red-100 border-red-300 text-red-900 font-bold' 
                       : 'bg-zinc-100 border-zinc-200 text-zinc-500 hover:text-red-800'
@@ -388,7 +371,6 @@ export default function InteractiveMenu({ lang }: InteractiveMenuProps) {
                 setActiveCategory('all');
                 setActiveBrand('all');
                 setSearchQuery('');
-                setMaxPrice(60000);
               }}
               className="text-xs text-ambient-orange font-mono underline mt-2 block mx-auto font-bold"
             >

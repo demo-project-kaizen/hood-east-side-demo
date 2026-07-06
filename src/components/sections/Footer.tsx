@@ -1,5 +1,5 @@
 import React from 'react';
-import { Instagram, MessageCircle, Twitter, MapPin, Phone, Mail, ShieldAlert } from 'lucide-react';
+import { Instagram, Twitter, MapPin, Mail, ShieldAlert } from 'lucide-react';
 
 interface FooterProps {
   lang: 'ID' | 'EN';
@@ -16,23 +16,23 @@ export default function Footer({ lang }: FooterProps) {
         {/* Top Segment: Logo and Navigation Links */}
         <div className="grid grid-cols-1 md:grid-cols-12 gap-8 mb-12">
           
-          {/* Logo & Slogan Column */}
-          <div className="md:col-span-4 flex flex-col space-y-4">
-            <div className="flex items-center space-x-3">
-              <div className="bg-zinc-950 border border-zinc-950 px-4 py-2 rounded-xl flex flex-col items-center justify-center">
-                <span className="font-display font-bold text-lg tracking-widest text-white leading-none">
-                  hood
-                </span>
-                <div className="flex justify-between w-full text-[6px] tracking-widest text-zinc-400 font-mono mt-0.5 uppercase">
-                  <span>east</span>
-                  <span>side</span>
-                </div>
-              </div>
-              <div className="flex flex-col">
-                <span className="text-[10px] font-mono tracking-widest text-zinc-400 uppercase leading-none font-bold">cipinang, jakarta</span>
-                <span className="text-[9px] font-sans text-ambient-orange font-medium tracking-wide mt-1">slow bar & social space</span>
-              </div>
-            </div>
+           {/* Logo & Slogan Column */}
+           <div className="md:col-span-4 flex flex-col space-y-4">
+             <div className="flex items-center space-x-3">
+               <div className="flex flex-col leading-none">
+                 <span className="font-display font-black text-lg tracking-[0.2em] text-zinc-950 uppercase select-none">
+                   hood
+                 </span>
+                 <span className="text-[7px] tracking-[0.3em] text-zinc-400 font-mono mt-0.5 uppercase font-bold select-none">
+                   east side
+                 </span>
+               </div>
+               <div className="h-6 w-[1px] bg-zinc-200 mx-1" id="footer-logo-divider" />
+               <div className="flex flex-col">
+                 <span className="text-[9px] font-mono tracking-widest text-zinc-500 uppercase leading-none font-bold">cipinang, jakarta</span>
+                 <span className="text-[9px] font-sans text-zinc-400 font-medium tracking-wide mt-1">{lang === 'ID' ? 'ruang sosial & kopi' : 'slow bar & social'}</span>
+               </div>
+             </div>
 
             <p className="text-xs text-zinc-600 max-w-sm leading-relaxed">
               {lang === 'ID'
@@ -50,15 +50,6 @@ export default function Footer({ lang }: FooterProps) {
                 aria-label="Follow Hood on Instagram"
               >
                 <Instagram className="w-4 h-4" />
-              </a>
-              <a 
-                href="https://wa.me" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="w-8 h-8 rounded-full bg-zinc-50 border border-zinc-200 flex items-center justify-center text-zinc-500 hover:text-zinc-900 hover:bg-zinc-100 transition-colors"
-                aria-label="Contact Hood on WhatsApp"
-              >
-                <MessageCircle className="w-4 h-4" />
               </a>
               <a 
                 href="https://twitter.com" 
@@ -113,12 +104,8 @@ export default function Footer({ lang }: FooterProps) {
                 <span>Jl. Cipinang Jaya Raya No.4, Jatinegara, Jakarta Timur</span>
               </li>
               <li className="flex items-center space-x-2">
-                <Phone className="w-4 h-4 text-zinc-400 shrink-0" />
-                <span>+62 812 3456 7890</span>
-              </li>
-              <li className="flex items-center space-x-2">
                 <Mail className="w-4 h-4 text-zinc-400 shrink-0" />
-                <span>cipinang@hoodeastside.com</span>
+                <span>hello@hoodeastside.com</span>
               </li>
             </ul>
           </div>
